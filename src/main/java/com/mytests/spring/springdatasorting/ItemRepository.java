@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
+// https://youtrack.jetbrains.com/issue/IDEA-345421
 public interface ItemRepository extends CrudRepository<Item,Integer> {
 
 
@@ -16,6 +16,8 @@ public interface ItemRepository extends CrudRepository<Item,Integer> {
             limit 3 offset 2
             """)
     List<String> limitOffsetNoParamsTest();
+
+//    https://youtrack.jetbrains.com/issue/IDEA-346362
 
     @Query("""
             select item.title from Item item
@@ -39,4 +41,17 @@ public interface ItemRepository extends CrudRepository<Item,Integer> {
             offset ?1 row fetch next ?2 rows only
             """)
     List<String> offsetFetchWithIndexParamsTest(int arg1, int arg2);
+
+// https://youtrack.jetbrains.com/issue/IDEA-335026
+
+    @Query("select concat( rez.rez_title, ': ', rez.rez_descr) from (select entity.created as rez_date, entity.title as rez_title, entity.description as rez_descr from Item entity) rez order by rez.rez_date, rez.rez_title")
+    List<String> subQuery0();
+
+    @Query("select rez.rez_title as t from (select coalesce(entity.title,'title') as rez_title from Item entity) rez order by rez.rez_title")
+    List<String> subQuery1();
+
+    @Query("select rez.rez_title as t from (select substring(entity.title, 6) as rez_title from Item entity) rez order by rez.rez_title")
+    List<String> subQuery2();
+
+
 }

@@ -48,6 +48,14 @@ public class ItemService {
         System.out.println("-- with index parameters for fetch and offset:");
         itemRepository.offsetFetchWithIndexParamsTest(3,2).iterator().forEachRemaining(System.out::println);
     }
-
+    public void subqueriesTest(){
+        System.out.println("================== subquery ordered by temp alias tests:");
+        System.out.println("-- without functions:");
+        itemRepository.subQuery0().iterator().forEachRemaining(System.out::println);
+        System.out.println("-- with coalesce():");
+        itemRepository.subQuery1().iterator().forEachRemaining(System.out::println);
+        System.out.println("-- with substring():");
+        itemRepository.subQuery2().iterator().forEachRemaining(System.out::println);
+    }
 
 }

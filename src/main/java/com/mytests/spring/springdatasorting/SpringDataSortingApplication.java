@@ -19,6 +19,7 @@ public class SpringDataSortingApplication {
                 System.out.println("--------------------------------------");
                 service.offsetLimitTest();
                 service.offsetFetchTest();
+                service.subqueriesTest();
                 System.out.println("--------------------------------------");
             };
         }
